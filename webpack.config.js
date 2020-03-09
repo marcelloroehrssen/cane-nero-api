@@ -13,7 +13,10 @@ Encore
     .enableReactPreset()
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
-
+    .copyFiles([
+        {from: './assets/images'},
+        {from: './assets/fonts'}
+    ])
     /*
      * ENTRY CONFIG
      *
@@ -46,7 +49,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })

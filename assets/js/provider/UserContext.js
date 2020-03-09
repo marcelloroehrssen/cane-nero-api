@@ -6,13 +6,13 @@ const UserContext = createContext([]);
 export function UserContextProvider(props) {
 
     const [state, setState] = useState({
-        'list': null
+        'user': null
     });
 
 
     useHttp('/user',{}, (data) => {
         setState({
-            'list': data.data
+            'user': data.user
         })
     });
 
