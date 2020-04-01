@@ -75,8 +75,7 @@ export const useStyles = makeStyles(theme => ({
         right: theme.spacing(2),
     },
     section: {
-        marginTop: theme.spacing(8),
-        color: theme.palette.primary.dark,
+        marginTop: theme.spacing(8), color: theme.palette.primary.dark,
     },
     sectionHr: {
         borderColor: theme.palette.primary.dark,

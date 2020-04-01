@@ -1,11 +1,11 @@
 {
-  "build/0.14119457.js": "/build/0.14119457.js",
-  "build/app.css": "/build/app.ac8f181a.css",
-  "build/app.js": "/build/app.8144396d.js",
-  "build/runtime.js": "/build/runtime.f011bcb1.js",
+  "build/app.css": "/build/app.css",
+  "build/app.js": "/build/app.js",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors~app.js": "/build/vendors~app.js",
   "build/fonts/long_shot.woff2": "/build/fonts/long_shot.214bc903.woff2",
   "build/images/logo.jpg": "/build/images/logo.9dd5623f.jpg",
-  "build/logo.jpg": "/build/logo.9dd5623f.jpg",
-  "build/long-shot/long_shot.woff": "/build/long-shot/long_shot.00716318.woff",
-  "build/long-shot/long_shot.woff2": "/build/long-shot/long_shot.214bc903.woff2"
+  "build/logo.jpg": "/build/logo.jpg",
+  "build/long-shot/long_shot.woff": "/build/long-shot/long_shot.woff",
+  "build/long-shot/long_shot.woff2": "/build/long-shot/long_shot.woff2"
 }
