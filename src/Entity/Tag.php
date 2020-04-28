@@ -21,7 +21,7 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="La tag deve avere un nome")
      */
     private $name;
 
@@ -29,6 +29,11 @@ class Tag
      * @ORM\ManyToMany(targetEntity="App\Entity\News", inversedBy="tags")
      */
     private $news;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -75,6 +80,18 @@ class Tag
         if ($this->news->contains($news)) {
             $this->news->removeElement($news);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

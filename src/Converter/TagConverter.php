@@ -19,7 +19,8 @@ class TagConverter implements Converter
 
         return [
             'id' => $entity->getId(),
-            'label' => $entity->getName()
+            'label' => $entity->getName(),
+            'slug' => $entity->getSlug()
         ];
     }
 }

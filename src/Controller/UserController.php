@@ -75,7 +75,7 @@ class UserController extends AbstractController
             $em->flush();
         }
 
-        $response = $this->userResponse->getResponse($user, 0, $messages);
+        $response = $this->userResponse->getResponse($user, 0, [], $messages);
         return $this->json($response);
     }
 
@@ -95,12 +95,20 @@ class UserController extends AbstractController
 
         if (!empty($filters)) {
             ['field' => $filterField, 'value' => $filterValue] = $filters;
-            $user = $repository->findOneByField($filterField, $filterValue) ?? null;
-            $isLogged = 0;
+
+            if ($filterField === 'all') {
+                $user = $repository->findAll();
+            } else if ($filterField === 'news') {
+                $user = $repository->findByField($filterField, $filterValue) ?? null;
+            } else {
+                $userFromDb = $repository->findByField($filterField, $filterValue) ?? null;
+                $user = ($this->getUser() !== null ? $this->getUser()->getId() : null) === ($userFromDb instanceof User ? $userFromDb->getId() : null) ? null : $userFromDb;
+            }
+
         } else {
-            $isLogged = $this->getUser() !== null;
             $user = $this->getUser();
         }
+        $isLogged = $this->getUser() !== null;
         $response = $this->userResponse->getResponse($user, $isLogged, [], $filters);
 
         return $this->json($response);
@@ -124,21 +132,12 @@ class UserController extends AbstractController
     )
     {
         [
-            'username' => $username, 'email' => $email, 'firstName' => $firstName, 'lastName' => $lastName, 'password' => $password,
+            'username' => $username, 'email' => $email, 'firstName' => $firstName, 'lastName' => $lastName, 'avatar' => $avatar
         ] = array_merge(
-            ['username' => null, 'email' => null, 'firstName' => null, 'lastName' => null, 'password' => null],
+            ['username' => null, 'email' => null, 'firstName' => null, 'lastName' => null, 'avatar' => null],
             json_decode($request->getContent(), true)
         );
-        if (null === $password) {
-            $response = $this->userResponse->getResponse(
-                null,
-                $this->getUser() !== null,
-                [],
-                ['For security reason Password must not be empty while updating a user']
-            );
 
-            return $this->json($response);
-        }
 
         /** @var User $user */
         $user = $this->getUser();
@@ -146,7 +145,7 @@ class UserController extends AbstractController
         $user->setFirstName($firstName ?? $user->getFirstName());
         $user->setLastName($lastName ?? $user->getLastName());
         $user->setEmail($email ?? $user->getEmail());
-        $user->setPassword($passwordEncoder->encodePassword($user, $password));
+        $user->setAvatar($avatar ?? $user->getAvatar());
 
         $violations = $validator->validate($user);
         $messages = [];

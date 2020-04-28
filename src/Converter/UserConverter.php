@@ -2,6 +2,7 @@
 
 namespace App\Converter;
 
+use App\Entity\Payment;
 use App\Entity\User;
 
 class UserConverter implements Converter
@@ -24,6 +25,22 @@ class UserConverter implements Converter
             'lastName' => $entity->getLastName(),
             'email' => $entity->getEmail(),
             'roles' => $entity->getRoles(),
+            'hasProblem' => $this->checkProblems($entity)
+        ];
+    }
+
+    /**
+     * @param User $entity
+     *
+     * @return array
+     */
+    public function checkProblems($entity)
+    {
+        return [
+            'payments' => $entity->getPayments()->filter(
+                function (Payment $el) {
+                    return $el->getYear().'' === date('Y').'';
+                })->count() === 0
         ];
     }
 }

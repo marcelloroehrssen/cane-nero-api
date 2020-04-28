@@ -7,6 +7,7 @@ use App\ValueObject\Filter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method News|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,15 +24,14 @@ class NewsRepository extends ServiceEntityRepository
 
     /**
      * @param Filter $filter
+     * @param int $maxResult
+     * @param int $offset
      *
      * @return News[]|null
      */
-    public function search(Filter $filter)
+    public function search(Filter $filter, ?int $maxResult, ?int $offset)
     {
-        $qb = $this->createQueryBuilder('n')
-            ->join('n.author', 'a')
-            ->join('n.tags', 't')
-        ;
+        $qb = $this->createQueryBuilder('n');
 
         if (null !== ($news = $filter->news)) {
             $qb->andWhere('n.id = :id')
@@ -49,16 +49,22 @@ class NewsRepository extends ServiceEntityRepository
             ;
         }
         if (null !== ($user = $filter->user)) {
-            $qb->andWhere('a = :user')
+            $qb->join('n.author', 'a')
+                ->andWhere('a = :user')
                 ->setParameter('user', $user)
             ;
         }
-        if (null !== ($tags = $filter->tags)) {
-            $qb->andWhere('t IN (:tags)')
-                ->setParameter('tags', $tags)
-            ;
+        if (!empty($filter->tags)) {
+            $qb->join('n.tags', 't')
+                ->andWhere('t IN (:tags)')
+                ->setParameter('tags', $filter->tags);
         }
 
-        return $qb->getQuery()->getResult();
+        $qb->orderBy('n.date', 'desc');
+
+        return $qb->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($maxResult)
+            ->getResult();
     }
 }

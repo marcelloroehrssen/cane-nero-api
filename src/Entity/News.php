@@ -22,19 +22,19 @@ class News
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Il titolo non può essere vuoto")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Ci deve essere almeno una immagine")
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Il tuo articolo non ha un corpo")
      */
     private $text;
 
@@ -49,13 +49,13 @@ class News
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="news")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="news", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="news")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="news", fetch="EAGER")
      */
     private $tags;
 

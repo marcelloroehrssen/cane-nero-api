@@ -59,7 +59,7 @@ class NewsController extends AbstractController
         $news = new News();
 
         foreach ($tags as $tag) {
-            if (null !== ($tagEntity = $tagRepository->find($tag))) {
+            if (null !== ($tagEntity = $tagRepository->find($tag['id']))) {
                 $news->addTag($tagEntity);
             }
         }
@@ -102,7 +102,10 @@ class NewsController extends AbstractController
     public function read(Request $request, NewsRepository $repository, FilterConverter $filterConverter)
     {
         $filters = $filterConverter->convert($request->query->get('filter', ''));
-        $news = $repository->search($filters);
+        $maxResult = $request->query->get('maxresult');
+        $offset = $request->query->get('offset');
+
+        $news = $repository->search($filters, $maxResult, $offset);
 
         $response = $this->newsResponse->getResponse(
             $news,
@@ -153,7 +156,7 @@ class NewsController extends AbstractController
         if (null !== $tags) {
             $tagsEntities = array_map(
                 function ($tag) use ($tagRepository) {
-                    return $tagRepository->find($tag);
+                    return $tagRepository->find($tag['id']);
                 },
                 $tags
             );

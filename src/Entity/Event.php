@@ -22,13 +22,13 @@ class Event
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Chronicle", inversedBy="creator")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chronicle", inversedBy="creator", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $chronicle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events", fetch="EAGER")
      */
     private $creator;
 

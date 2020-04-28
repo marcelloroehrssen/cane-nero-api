@@ -26,7 +26,7 @@ class User implements UserInterface, EncoderAwareInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank();
+     * @Assert\NotBlank(message="Username mancante");
      */
     private $username;
 
@@ -39,25 +39,25 @@ class User implements UserInterface, EncoderAwareInterface
      * @var string The hashed password
      *
      * @ORM\Column(type="string")
-     * @Assert\NotBlank();
+     * @Assert\NotBlank(message="Password mancante");
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
+     * @Assert\Email(message="Email non valida")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank();
+     * @Assert\NotBlank(message="Ci vuole un nome");
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank();
+     * @Assert\NotBlank(message="Ci vuole un cognome");
      */
     private $lastName;
 
@@ -76,10 +76,16 @@ class User implements UserInterface, EncoderAwareInterface
      */
     private $news;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="user")
+     */
+    private $payments;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->news = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,6 +273,37 @@ class User implements UserInterface, EncoderAwareInterface
             // set the owning side to null (unless already changed)
             if ($news->getAuthor() === $this) {
                 $news->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->contains($payment)) {
+            $this->payments->removeElement($payment);
+            // set the owning side to null (unless already changed)
+            if ($payment->getUser() === $this) {
+                $payment->setUser(null);
             }
         }
 

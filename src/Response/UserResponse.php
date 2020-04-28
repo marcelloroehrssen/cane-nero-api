@@ -3,6 +3,7 @@
 namespace App\Response;
 
 use App\Converter\UserConverter;
+use App\Entity\User;
 
 class UserResponse
 {
@@ -29,9 +30,19 @@ class UserResponse
      */
     public function getResponse($user, $isLogged = 0, $filters = [], $messages = [])
     {
+        $users = [];
+        if (null !== $user) {
+            if ($user instanceof User) {
+                $users = $this->userConverter->convert($user);
+            } else {
+                $users = array_map(function ($u) {
+                    return $this->userConverter->convert($u);
+                }, $user);
+            }
+        }
         return [
             'isLogged' => $isLogged,
-            'user' => $this->userConverter->convert($user),
+            'user' => $users,
             'filter' => $filters,
             'errors' => $messages,
         ];

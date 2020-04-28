@@ -13,6 +13,11 @@ services:
         bind:
             string $secretKey: 'my_awesome_secret_key'
             int $jwtSessionValidity: 86400
+            string $cdnUrl: '%env(CDN_URL)%'
+            string $cdnUser: '%env(CDN_DIR_USER)%'
+            string $cdnNews: '%env(CDN_DIR_NEWS)%'
+            string $newsDestinationFiles: '%env(UPLOAD_DIR_NEWS)%'
+            string $userDestinationFiles: '%env(UPLOAD_DIR_USER)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
