@@ -41,7 +41,7 @@ class FileResponse
      *
      * @return array
      */
-    public function getResponse($name, $resource,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($name, $resource, $isLogged = 0, $filters = [], $errors = [])
     {
         $path = '';
         if ($resource === 'user') {
@@ -53,7 +53,7 @@ class FileResponse
         return [
             'isLogged' => $isLogged,
             'file' => [
-                'path' => $this->cdnUrl . $path . $name
+                'path' => $this->cdnUrl.$path.$name
             ],
             'filter' => $filters,
             'errors' => $errors,

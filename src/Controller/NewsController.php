@@ -155,7 +155,7 @@ class NewsController extends AbstractController
         $tagsEntities = [];
         if (null !== $tags) {
             $tagsEntities = array_map(
-                function ($tag) use ($tagRepository) {
+                function($tag) use ($tagRepository) {
                     return $tagRepository->find($tag['id']);
                 },
                 $tags

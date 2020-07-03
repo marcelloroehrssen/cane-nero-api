@@ -46,8 +46,8 @@ class FilterConverter implements Converter
             'author' => $author,
             'tags'  => $tags
         ] = array_merge(
-            ['id' => null, 'dates' => [], 'author' => null,'tags' => []],
-            json_decode($entity , true) ?? []
+            ['id' => null, 'dates' => [], 'author' => null, 'tags' => []],
+            json_decode($entity, true) ?? []
         );
 
         $news = null;
@@ -62,7 +62,7 @@ class FilterConverter implements Converter
                 new \DateTime($dates[0]),
                 new \DateTime($dates[1]),
             ];
-            usort($dateObject, function (\DateTime $date1, \DateTime $date2) {
+            usort($dateObject, function(\DateTime $date1, \DateTime $date2) {
                 return ($date1->format('U') - $date2->format('U')) > 0;
             });
         }
@@ -74,7 +74,7 @@ class FilterConverter implements Converter
 
         $tagsEntity = [];
         if (!empty($tags)) {
-            $tagsEntity = array_map(function ($tag) {
+            $tagsEntity = array_map(function($tag) {
                 return $this->tagRepository->findOneBySlug($tag);
             }, $tags);
         }

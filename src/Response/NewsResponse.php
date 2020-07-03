@@ -27,11 +27,11 @@ class NewsResponse
      *
      * @return array
      */
-    public function getResponse($news,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($news, $isLogged = 0, $filters = [], $errors = [])
     {
         return [
             'isLogged' => $isLogged,
-            'news' => array_map(function ($news) {
+            'news' => array_map(function($news) {
                 return $this->newsConverter->convert($news);
             }, $news),
             'filter' => $filters,

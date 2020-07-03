@@ -37,7 +37,7 @@ class ChronicleController extends AbstractController
         $chronicles = $chronicleRepository->findAll();
         $response = $this->chronicleResponse->getResponse(
             $chronicles,
-            $this->getUser() !== null ,
+            $this->getUser() !== null,
             [],
             []
         );

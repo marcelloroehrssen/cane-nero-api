@@ -18,11 +18,11 @@ class PaymentResponse
         $this->paymentConverter = $paymentConverter;
     }
 
-    public function getResponse($payments,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($payments, $isLogged = 0, $filters = [], $errors = [])
     {
         return [
             'isLogged' => $isLogged,
-            'payments' => array_map(function ($payment) {
+            'payments' => array_map(function($payment) {
                 return $this->paymentConverter->convert($payment);
             }, $payments),
             'filter' => $filters,

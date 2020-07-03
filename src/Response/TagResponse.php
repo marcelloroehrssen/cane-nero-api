@@ -28,11 +28,11 @@ class TagResponse
      *
      * @return array
      */
-    public function getResponse($tags,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($tags, $isLogged = 0, $filters = [], $errors = [])
     {
         return [
             'isLogged' => $isLogged,
-            'tags' => array_map(function ($tag) {
+            'tags' => array_map(function($tag) {
                 return $this->tagConverter->convert($tag);
             }, $tags),
             'filter' => $filters,

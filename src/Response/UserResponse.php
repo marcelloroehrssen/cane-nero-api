@@ -35,7 +35,7 @@ class UserResponse
             if ($user instanceof User) {
                 $users = $this->userConverter->convert($user);
             } else {
-                $users = array_map(function ($u) {
+                $users = array_map(function($u) {
                     return $this->userConverter->convert($u);
                 }, $user);
             }

@@ -26,11 +26,11 @@ class EventResponse
      *
      * @return array
      */
-    public function getResponse($events,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($events, $isLogged = 0, $filters = [], $errors = [])
     {
         return [
             'isLogged' => $isLogged,
-            'events' => array_map(function ($event) {
+            'events' => array_map(function($event) {
                 return $this->eventConverter->convert($event);
             }, $events),
             'filter' => $filters,
