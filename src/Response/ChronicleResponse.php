@@ -26,11 +26,11 @@ class ChronicleResponse
      *
      * @return array
      */
-    public function getResponse($chronicles,  $isLogged = 0, $filters = [], $errors = [])
+    public function getResponse($chronicles, $isLogged = 0, $filters = [], $errors = [])
     {
         return [
             'isLogged' => $isLogged,
-            'chronicles' => array_map(function ($chronicle) {
+            'chronicles' => array_map(function($chronicle) {
                 return $this->chronicleConverter->convert($chronicle);
             }, $chronicles),
             'filter' => $filters,

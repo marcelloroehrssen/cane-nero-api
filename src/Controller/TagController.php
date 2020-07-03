@@ -42,7 +42,7 @@ class TagController extends AbstractController
      */
     public function create(Request $request, ValidatorInterface $validator, EntityManagerInterface $em)
     {
-        ['name' => $name,] = json_decode($request->getContent(), true);
+        ['name' => $name, ] = json_decode($request->getContent(), true);
         $tag = new Tag();
         $tag->setName($name);
 

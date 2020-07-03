@@ -38,7 +38,7 @@ class UserConverter implements Converter
     {
         return [
             'payments' => $entity->getPayments()->filter(
-                function (Payment $el) {
+                function(Payment $el) {
                     return $el->getYear().'' === date('Y').'';
                 })->count() === 0
         ];

@@ -44,9 +44,9 @@ class PaymentController extends AbstractController
      * @throws \Exception
      */
     public function create(Request $request,
-                           ValidatorInterface $validator,
-                           EntityManagerInterface $em,
-                           UserRepository $userRepository)
+                            ValidatorInterface $validator,
+                            EntityManagerInterface $em,
+                            UserRepository $userRepository)
     {
         [
             'year' => $year,

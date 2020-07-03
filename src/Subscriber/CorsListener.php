@@ -23,7 +23,7 @@ class CorsListener implements EventSubscriberInterface
             return;
         }
 
-        $method  = $event->getRequest()->getRealMethod();
+        $method = $event->getRequest()->getRealMethod();
         if ('OPTIONS' == $method) {
             $response = new Response();
             $event->setResponse($response);

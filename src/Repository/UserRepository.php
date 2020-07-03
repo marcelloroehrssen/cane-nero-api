@@ -54,7 +54,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->distinct();
             return $query->getQuery()->getResult();
         } else {
-            $query->andWhere('u.' . $field . ' = :val')->setParameter('val', $value);
+            $query->andWhere('u.'.$field.' = :val')->setParameter('val', $value);
             return $query->getQuery()->getOneOrNullResult();
         }
     }
